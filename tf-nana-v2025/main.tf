@@ -13,3 +13,17 @@ resource "aws_subnet" "dev-subnet-1" {
   cidr_block        = "10.0.10.0/24"
   availability_zone = "eu-central-1a"
 }
+
+data "aws_vpc" "existing_vpc" {
+  default = true
+}
+# Name must be unique for each resource type (we cp from dev-subnet-1 to dev-subnet-2 and change the name of the resource)
+resource "aws_subnet" "dev-subnet-2" {
+  vpc_id            = data.aws_vpc.existing_vpc.id 
+  cidr_block        = "172.31.48.0/20"
+  availability_zone = "eu-central-1a"
+}
+
+
+
+# Terraform encountered an error while generating this plan.
